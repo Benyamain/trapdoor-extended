@@ -229,10 +229,10 @@ def generate_attack(sess, model, test_X, method, target, num_classes, clip_max=2
                                  binary_search_steps=9, max_iterations=5000, abort_early=True,
                                  initial_const=0.001, confidence=confidence, learning_rate=0.01)
 
-    elif method == "pgd":
+    elif method == "bim":
         eps = 8 if not mnist else 8 / 255
         eps_iter = 0.1 if not mnist else 0.1 / 255
-        pgd = attacks.ProjectedGradientDescent(wrap, sess=sess)
+        pgd = attacks.BasicIterativeMethod(wrap, sess=sess)
         adv_x = pgd.generate_np(test_X, y_target=y_tgt, clip_max=clip_max, nb_iter=100, eps=eps,
                                 eps_iter=eps_iter, clip_min=clip_min)
 

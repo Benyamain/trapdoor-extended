@@ -110,7 +110,7 @@ def eval_defense():
 
     sess = init_gpu(args.gpu)
     if args.attack == 'all':
-        ATTACK = ["cw", "en", 'pgd']
+        ATTACK = ["cw", "en", 'bim', 'df', 'fgsm']
     else:
         ATTACK = [args.attack]
 
