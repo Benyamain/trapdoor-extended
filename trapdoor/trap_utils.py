@@ -21,7 +21,8 @@ def fix_gpu_memory(mem_fraction=1):
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     tf_config = None
     if tf.test.is_gpu_available():
-        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=mem_fraction)
+        gpu_options = tf.GPUOptions(
+            per_process_gpu_memory_fraction=mem_fraction)
         tf_config = tf.ConfigProto(gpu_options=gpu_options)
         tf_config.gpu_options.allow_growth = True
         tf_config.log_device_placement = False
@@ -114,11 +115,13 @@ def get_cifar_model(softmax=True):
         Flatten(),  # 21
         Dropout(0.5),  # 22
 
-        Dense(1024, kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)),  # 23
+        Dense(1024, kernel_regularizer=l2(0.01),
+              bias_regularizer=l2(0.01)),  # 23
         Activation('relu'),  # 24
         BatchNormalization(),  # 25
         Dropout(0.5),  # 26
-        Dense(512, kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01), name='dense'),  # 27
+        Dense(512, kernel_regularizer=l2(0.01),
+              bias_regularizer=l2(0.01), name='dense'),  # 27
         Activation('relu'),  # 28
         BatchNormalization(),  # 29
         Dropout(0.5),  # 30
@@ -154,7 +157,8 @@ def get_mnist_model(input_shape=(28, 28, 1),
 
 def get_model(dataset, load_clean=False):
     if load_clean:
-        model = keras.models.load_model("/home/shansixioing/trap/models/{}_clean.h5".format(dataset))
+        model = keras.models.load_model(
+            "/home/shansixioing/trap/models/{}_clean.h5".format(dataset))
     else:
         if dataset == "cifar":
             model = get_cifar_model()
@@ -199,10 +203,13 @@ class CallbackGenerator(keras.callbacks.Callback):
         self.model_file = model_file
 
     def on_epoch_end(self, epoch, logs=None):
-        _, clean_acc = self.model.evaluate_generator(self.test_nor_gen, verbose=0, steps=100)
-        _, attack_acc = self.model.evaluate_generator(self.adv_gen, steps=100, verbose=0)
+        _, clean_acc = self.model.evaluate_generator(
+            self.test_nor_gen, verbose=0, steps=100)
+        _, attack_acc = self.model.evaluate_generator(
+            self.adv_gen, steps=100, verbose=0)
 
-        print("Epoch: {} - Clean Acc {:.4f} - Trapdoor Acc {:.4f}".format(epoch, clean_acc, attack_acc))
+        print("Epoch: {} - Clean Acc {:.4f} - Trapdoor Acc {:.4f}".format(epoch,
+              clean_acc, attack_acc))
         if clean_acc > self.expected_acc and attack_acc > self.best_attack and attack_acc > 0.9:
             if self.model_file:
                 self.model.save(self.model_file)
@@ -219,9 +226,13 @@ def generate_attack(sess, model, test_X, method, target, num_classes, clip_max=2
     set_log_level(0)
 
     wrap = utils_keras.KerasModelWrapper(model)
-    y_tgt = keras.utils.to_categorical([target] * test_X.shape[0], num_classes=num_classes)
+    y_tgt = keras.utils.to_categorical(
+        [target] * test_X.shape[0], num_classes=num_classes)
 
     batch_size = len(test_X) if batch_size is None else batch_size
+
+    eps = 8 if not mnist else 8 / 255
+    eps_iter = 0.1 if not mnist else 0.1 / 255
 
     if method == "cw":
         cwl2 = attacks.CarliniWagnerL2(wrap, sess=sess)
@@ -230,10 +241,8 @@ def generate_attack(sess, model, test_X, method, target, num_classes, clip_max=2
                                  initial_const=0.001, confidence=confidence, learning_rate=0.01)
 
     elif method == "bim":
-        eps = 8 if not mnist else 8 / 255
-        eps_iter = 0.1 if not mnist else 0.1 / 255
-        pgd = attacks.BasicIterativeMethod(wrap, sess=sess)
-        adv_x = pgd.generate_np(test_X, y_target=y_tgt, clip_max=clip_max, nb_iter=100, eps=eps,
+        bim = attacks.BasicIterativeMethod(wrap, sess=sess)
+        adv_x = bim.generate_np(test_X, y_target=y_tgt, clip_max=clip_max, nb_iter=100, eps=eps,
                                 eps_iter=eps_iter, clip_min=clip_min)
 
     elif method == "en":
@@ -242,14 +251,13 @@ def generate_attack(sess, model, test_X, method, target, num_classes, clip_max=2
                                  binary_search_steps=20, max_iterations=500, abort_early=True, learning_rate=0.5)
 
     elif method == "df":
-        enet = attacks.DeepFool(wrap, sess=sess)
-        adv_x = enet.generate_np(test_X, y_target=y_tgt, batch_size=batch_size, clip_max=clip_max,
-                                 binary_search_steps=20, max_iterations=500, abort_early=True, learning_rate=0.5)
+        deepfool = attacks.DeepFool(wrap, sess=sess)
+        adv_x = deepfool.generate_np(test_X, y_target=y_tgt)
 
     elif method == "fgsm":
-        enet = attacks.FastGradientMethod(wrap, sess=sess)
-        adv_x = enet.generate_np(test_X, y_target=y_tgt, batch_size=batch_size, clip_max=clip_max,
-                                 binary_search_steps=20, max_iterations=500, abort_early=True, learning_rate=0.5)        
+        fgsm = attacks.FastGradientMethod(wrap, sess=sess)
+        adv_x = fgsm.generate_np(
+            test_X, y_target=y_tgt, clip_max=clip_max, clip_min=clip_min)
 
     else:
         raise Exception("No such attack")
@@ -267,9 +275,11 @@ def construct_mask_random_location(image_row=32, image_col=32, channel_num=3, pa
 
     mask[c_row:c_row + pattern_size, c_col:c_col + pattern_size, :] = 1
     if channel_num == 1:
-        pattern[c_row:c_row + pattern_size, c_col:c_col + pattern_size, :] = [1]
+        pattern[c_row:c_row + pattern_size,
+                c_col:c_col + pattern_size, :] = [1]
     else:
-        pattern[c_row:c_row + pattern_size, c_col:c_col + pattern_size, :] = color
+        pattern[c_row:c_row + pattern_size,
+                c_col:c_col + pattern_size, :] = color
 
     return mask, pattern
 
@@ -284,9 +294,11 @@ def construct_mask_random_location_mnist(image_row=28, image_col=28, channel_num
 
     mask[c_row:c_row + pattern_size, c_col:c_col + pattern_size, :] = 1
     if channel_num == 1:
-        pattern[c_row:c_row + pattern_size, c_col:c_col + pattern_size, :] = [1]
+        pattern[c_row:c_row + pattern_size,
+                c_col:c_col + pattern_size, :] = [1]
     else:
-        pattern[c_row:c_row + pattern_size, c_col:c_col + pattern_size, :] = color
+        pattern[c_row:c_row + pattern_size,
+                c_col:c_col + pattern_size, :] = color
 
     return mask, pattern
 

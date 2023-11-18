@@ -183,7 +183,7 @@ def parse_arguments(argv):
     parser.add_argument('--dataset', type=str,
                         help='name of dataset', default='mnist')
     parser.add_argument('--attack', type=str,
-                        help='attack type', default='pgd')
+                        help='attack type', default='bim')
     parser.add_argument('--filter-ratio', type=float,
                         help='ratio of neuron kept for matching', default=1.0)
     return parser.parse_args(argv)
