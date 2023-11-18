@@ -241,6 +241,16 @@ def generate_attack(sess, model, test_X, method, target, num_classes, clip_max=2
         adv_x = enet.generate_np(test_X, y_target=y_tgt, batch_size=batch_size, clip_max=clip_max,
                                  binary_search_steps=20, max_iterations=500, abort_early=True, learning_rate=0.5)
 
+    elif method == "df":
+        enet = attacks.DeepFool(wrap, sess=sess)
+        adv_x = enet.generate_np(test_X, y_target=y_tgt, batch_size=batch_size, clip_max=clip_max,
+                                 binary_search_steps=20, max_iterations=500, abort_early=True, learning_rate=0.5)
+
+    elif method == "fgsm":
+        enet = attacks.FastGradientMethod(wrap, sess=sess)
+        adv_x = enet.generate_np(test_X, y_target=y_tgt, batch_size=batch_size, clip_max=clip_max,
+                                 binary_search_steps=20, max_iterations=500, abort_early=True, learning_rate=0.5)        
+
     else:
         raise Exception("No such attack")
 
