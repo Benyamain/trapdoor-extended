@@ -38,7 +38,8 @@ def eval_filter_pattern(bottleneck_model, X_train, Y_train, X_test, X_adv_raw, y
         sig = X_neuron_adv
         return sig
 
-    adv_sig = build_neuron_signature(bottleneck_model, X_train, Y_train, y_target)
+    adv_sig = build_neuron_signature(
+        bottleneck_model, X_train, Y_train, y_target)
     X = np.array(X_test)
     X_adv = preprocess(X_adv_raw, method="raw")
     X_neuron = bottleneck_model.predict(X)
@@ -99,8 +100,10 @@ def infect_X(img, tgt, num_classes, pattern_dict):
 
 
 def eval_trapdoor(model, test_X, test_Y, y_target, pattern_dict, num_classes):
-    cur_test_X = np.array([infect_X(img, y_target, num_classes, pattern_dict)[0] for img in np.copy(test_X)])
-    trapdoor_succ = np.mean(np.argmax(model.predict(cur_test_X), axis=1) == y_target)
+    cur_test_X = np.array([infect_X(img, y_target, num_classes, pattern_dict)[
+                          0] for img in np.copy(test_X)])
+    trapdoor_succ = np.mean(
+        np.argmax(model.predict(cur_test_X), axis=1) == y_target)
     return trapdoor_succ
 
 
@@ -110,7 +113,7 @@ def eval_defense():
 
     sess = init_gpu(args.gpu)
     if args.attack == 'all':
-        ATTACK = ["cw", "en", 'bim', 'df', 'fgsm']
+        ATTACK = ["cw", "enet", 'bim', 'df', 'fgsm', 'mim', 'madry', 'smap', 'lbfgs']
     else:
         ATTACK = [args.attack]
 

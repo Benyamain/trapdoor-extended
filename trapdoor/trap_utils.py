@@ -218,7 +218,6 @@ class CallbackGenerator(keras.callbacks.Callback):
         # if clean_acc > self.expected_acc and attack_acc > 0.995:
         #     self.model.stop_training = True
 
-
 def generate_attack(sess, model, test_X, method, target, num_classes, clip_max=255.0,
                     clip_min=0.0, mnist=False, confidence=0, batch_size=None):
     from cleverhans import utils_keras
@@ -245,19 +244,38 @@ def generate_attack(sess, model, test_X, method, target, num_classes, clip_max=2
         adv_x = bim.generate_np(test_X, y_target=y_tgt, clip_max=clip_max, nb_iter=100, eps=eps,
                                 eps_iter=eps_iter, clip_min=clip_min)
 
-    elif method == "en":
+    elif method == "enet":
         enet = attacks.ElasticNetMethod(wrap, sess=sess)
         adv_x = enet.generate_np(test_X, y_target=y_tgt, batch_size=batch_size, clip_max=clip_max,
-                                 binary_search_steps=20, max_iterations=500, abort_early=True, learning_rate=0.5)
+                                 binary_search_steps=9, max_iterations=5000, abort_early=True, learning_rate=0.01, initial_const=0.001, clip_min=clip_min)
 
+    # Not aligned with the current goal of our research, but will still be included
     elif method == "df":
         deepfool = attacks.DeepFool(wrap, sess=sess)
-        adv_x = deepfool.generate_np(test_X, y_target=y_tgt)
+        adv_x = deepfool.generate_np(test_X, overshoot=0.02, max_iter=500, clip_min=clip_min, clip_max=clip_max)
 
     elif method == "fgsm":
         fgsm = attacks.FastGradientMethod(wrap, sess=sess)
-        adv_x = fgsm.generate_np(
-            test_X, y_target=y_tgt, clip_max=clip_max, clip_min=clip_min)
+        adv_x = fgsm.generate_np(test_X, y_target=y_tgt, eps=eps, clip_min=clip_min, clip_max=clip_max)
+
+    elif method == "mim":
+        mim = attacks.MomentumIterativeMethod(wrap, sess=sess)
+        adv_x = mim.generate_np(test_X, eps=eps, eps_iter=eps_iter, nb_iter=100, clip_min=clip_min, clip_max=clip_max, y_target=y_tgt)
+
+    elif method == "madry":
+        madry = attacks.MadryEtAl(wrap, sess=sess)
+        adv_x = madry.generate_np(test_X, eps=eps, eps_iter=eps_iter, nb_iter=100, clip_min=clip_min, clip_max=clip_max, y_target=y_tgt)
+
+    elif method == "lbfgs":
+        lbfgs = attacks.LBFGS(wrap, sess=sess)
+        adv_x = lbfgs.generate_np(test_X, y_target=y_tgt, batch_size=batch_size,
+                     binary_search_steps=9, max_iterations=500,
+                     initial_const=0.001, clip_min=clip_min, clip_max=clip_max)
+        
+    # Not working as of the moment
+    elif method == "smap":
+        smap = attacks.SaliencyMapMethod(wrap, sess=sess)
+        adv_x = smap.generate_np(test_X, clip_min=clip_min, clip_max=clip_max, y_target=y_tgt)
 
     else:
         raise Exception("No such attack")
