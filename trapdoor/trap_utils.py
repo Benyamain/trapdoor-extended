@@ -260,17 +260,17 @@ def generate_attack(sess, model, test_X, method, target, num_classes, clip_max=2
 
     elif method == "mim":
         mim = attacks.MomentumIterativeMethod(wrap, sess=sess)
-        adv_x = mim.generate_np(test_X, eps=eps, eps_iter=eps_iter, nb_iter=100, clip_min=clip_min, clip_max=clip_max, y_target=y_tgt)
+        adv_x = mim.generate_np(test_X, eps=eps, eps_iter=eps_iter, nb_iter=5, clip_min=clip_min, clip_max=clip_max, y_target=y_tgt)
 
     elif method == "madry":
         madry = attacks.MadryEtAl(wrap, sess=sess)
-        adv_x = madry.generate_np(test_X, eps=eps, eps_iter=eps_iter, nb_iter=100, clip_min=clip_min, clip_max=clip_max, y_target=y_tgt)
+        adv_x = madry.generate_np(test_X, eps=eps, eps_iter=eps_iter, nb_iter=10, clip_min=clip_min, clip_max=clip_max, y_target=y_tgt)
 
     elif method == "lbfgs":
         lbfgs = attacks.LBFGS(wrap, sess=sess)
         adv_x = lbfgs.generate_np(test_X, y_target=y_tgt, batch_size=batch_size,
-                     binary_search_steps=9, max_iterations=500,
-                     initial_const=0.001, clip_min=clip_min, clip_max=clip_max)
+                     binary_search_steps=5, max_iterations=50,
+                     initial_const=0.1, clip_min=clip_min, clip_max=clip_max)
         
     # Not working as of the moment
     elif method == "smap":
