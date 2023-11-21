@@ -5,7 +5,7 @@ This repository contains code implementation of the paper "[Gotta Catch’Em All
 Trapdoor is a defense against adversarial attack developed by researchers at [SANDLab](https://sandlab.cs.uchicago.edu/), University of Chicago.  
 
 ### Note
-The code base currently only support MNIST and CIFAR10 dataset and four different attacks: CW, BIM, FGSM, DeepFool. 
+The code base currently only support MNIST and CIFAR10 dataset and six different attacks: CW, BIM, FGSM, MIM, MadryEtAl, L-BFGS. 
 
 ### DEPENDENCIES
 
