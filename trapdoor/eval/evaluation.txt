@@ -1,0 +1,204 @@
+MNIST, CW:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.998
+ATTACK: cw, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 0.96875
+Detection AUC score 0.997314
+Target: 1 - Trapdoor Succ: 0.999
+ATTACK: cw, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 0.9375
+Detection AUC score 0.987549
+Target: 0 - Trapdoor Succ: 1.0
+ATTACK: cw, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 0.953125
+Detection AUC score 0.979980
+
+
+CIFAR-10, CW:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.975
+ATTACK: cw, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 0.890625
+Detection AUC score 0.959229
+Target: 1 - Trapdoor Succ: 0.993
+ATTACK: cw, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 0.53125
+Detection AUC score 0.930176
+Target: 0 - Trapdoor Succ: 0.986
+ATTACK: cw, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 0.921875
+Detection AUC score 0.973389
+
+
+
+MNIST, PGD:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.998
+ATTACK: bim, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 1 - Trapdoor Succ: 0.999
+ATTACK: bim, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 0 - Trapdoor Succ: 1.0
+ATTACK: bim, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+
+
+CIFAR-10, PGD:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.975
+ATTACK: bim, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 1 - Trapdoor Succ: 0.993
+ATTACK: bim, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 0 - Trapdoor Succ: 0.986
+ATTACK: bim, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+
+
+
+MNIST, FGSM:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.998
+ATTACK: fgsm, Attack Success: 0.1562
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 1 - Trapdoor Succ: 0.999
+ATTACK: fgsm, Attack Success: 0.0938
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 0 - Trapdoor Succ: 1.0
+ATTACK: fgsm, Attack Success: 0.3125
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+
+
+CIFAR-10, FGSM:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.975
+ATTACK: fgsm, Attack Success: 0.0469
+fgsm attack has low success rate
+Target: 1 - Trapdoor Succ: 0.993
+ATTACK: fgsm, Attack Success: 0.2344
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 0 - Trapdoor Succ: 0.986
+ATTACK: fgsm, Attack Success: 0.4219
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+
+
+
+MNIST, MIM:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.998
+ATTACK: mim, Attack Success: 0.0625
+Detection Success Rate at 0.05 FPR: 0.75
+Detection AUC score 0.937500
+Target: 1 - Trapdoor Succ: 0.999
+ATTACK: mim, Attack Success: 0.0000
+mim attack has low success rate
+Target: 0 - Trapdoor Succ: 1.0
+ATTACK: mim, Attack Success: 0.0312
+mim attack has low success rate
+
+
+CIFAR-10, MIM:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.975
+ATTACK: mim, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 1 - Trapdoor Succ: 0.993
+ATTACK: mim, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 0 - Trapdoor Succ: 0.986
+ATTACK: mim, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+
+
+
+MNIST, MadryEtAl:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.998
+ATTACK: madry, Attack Success: 0.7812
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 1 - Trapdoor Succ: 0.999
+ATTACK: madry, Attack Success: 0.7812
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 0.995600
+Target: 0 - Trapdoor Succ: 1.0
+ATTACK: madry, Attack Success: 0.7188
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+
+
+CIFAR-10, MadryEtAl:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.975
+ATTACK: madry, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 1 - Trapdoor Succ: 0.993
+ATTACK: madry, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 0 - Trapdoor Succ: 0.986
+ATTACK: madry, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+
+
+
+MNIST, L-BFGS:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.998
+ATTACK: lbfgs, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 1 - Trapdoor Succ: 0.999
+ATTACK: lbfgs, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 1.000000
+Target: 0 - Trapdoor Succ: 1.0
+ATTACK: lbfgs, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 0.999023
+
+
+CIFAR-10, L-BFGS:
+
+Randomly Select 3 Target Label for Evaluations:
+Target: 7 - Trapdoor Succ: 0.975
+ATTACK: lbfgs, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 1.0
+Detection AUC score 0.992676
+Target: 1 - Trapdoor Succ: 0.993
+ATTACK: lbfgs, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 0.96875
+Detection AUC score 0.977539
+Target: 0 - Trapdoor Succ: 0.986
+ATTACK: lbfgs, Attack Success: 1.0000
+Detection Success Rate at 0.05 FPR: 0.96875
+Detection AUC score 0.991943
