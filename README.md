@@ -42,9 +42,10 @@ Given a trapdoored model in ./model and pattern stored in ./results. Run:
 
 `python eval_detection.py --dataset cifar --attack bim`
 
-Make sure to change the MODEL_PATH, RES_PATH when running the code on customized models. 
+Make sure to change the MODEL_PATH, RES_PATH when running the code on customized models.
+The code will run targeted BIM attack on 3 randomly selected label. It will print out the AUC of detection and the attack success rate at 5% FPR.
+
 Other adversarial attacks can be found in `trap_utils.py`
-The code will run targeted BIM attack on 3 randomly selected label. It will print out the AUC of detection and the attack success rate at 5% FPR. 
 
 To randomize the neuron matching process as discussed in Section 7.2:
 
